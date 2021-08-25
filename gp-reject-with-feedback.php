@@ -38,7 +38,8 @@ function gp_reject_with_feedback_missing_gp_notice() {
 function activate_gp_reject_with_feedback() {
 	require_once plugin_dir_path( __FILE__ ) . 'class-gp-reject-with-feedback.php';
 	if ( gp_reject_with_feedback_check_requirements() ) {
-		$plugin = new GP_Reject_With_Feedback();
+		$plugin = new GP_Reject_With_Feedback;
+		$plugin->init();
 	}
 }
 
