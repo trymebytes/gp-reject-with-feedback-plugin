@@ -87,7 +87,7 @@ class GP_Reject_With_Feedback_In_Forum_Topic {
 		$topic_id = bbp_insert_topic( $topic_data, $topic_meta );
 
 		//store the topic id for this translation in Glotpress meta
-		gp_update_meta( $this->translation_id, 'rejection_topic_id', $topic_id, 'reject-translation' );
+		gp_update_meta( $this->original_id, 'rejection_topic_id', $topic_id, 'reject-translation' );
 		return $topic_id;
 
 	}

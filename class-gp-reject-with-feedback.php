@@ -76,9 +76,9 @@ class GP_Reject_With_Feedback {
 	 * @param int $translation_id
 	 * @return bool
 	 */
-	private function get_translation_meta_data( $translation_id ) {
+	private function get_translation_meta_data( $original_id ) {
 		$object_type = 'reject-translation';
-		$object_id   = $translation_id;
+		$object_id   = $original_id;
 		$meta_key    = 'rejection_topic_id';
 
 		$translation_meta_data = gp_get_meta( $object_type, $object_id, $meta_key );
@@ -95,9 +95,9 @@ class GP_Reject_With_Feedback {
 	private function process_reject_with_feedback( $data ) {
 		$gp_reject_instance = new GP_Reject_With_Feedback_In_Forum_Topic( $data );
 
-		$translation_id = $data['translation_id'];
+		$original_id = $data['original_id'];
 
-		$translation_meta_data = $this->get_translation_meta_data( $translation_id );
+		$translation_meta_data = $this->get_translation_meta_data( $original_id );
 
 		if ( ! empty( $translation_meta_data ) ) {
 			//add rejection feedback as reply
