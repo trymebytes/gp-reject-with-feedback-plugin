@@ -103,8 +103,9 @@ class GP_Reject_With_Feedback {
 			//add rejection feedback as reply
 			$topic_id = intval( $translation_meta_data );
 
+			$forum_id = $gp_reject_instance->getForumIdForLocale();
 			//adds reply and returns the reply_id
-			return $gp_reject_instance->add_reply( $topic_id );
+			return $gp_reject_instance->add_reply( $topic_id, $forum_id );
 		}
 		//create new topic for this rejection and return topic_id
 		return $gp_reject_instance->create_topic();

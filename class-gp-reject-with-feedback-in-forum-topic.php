@@ -54,17 +54,26 @@ class GP_Reject_With_Feedback_In_Forum_Topic {
 	}
 
 	/**
+	 * Return forum ID for locale, return false if locale
+	 * @return int|false - forum_id or false
+	 */
+	public function getForumIdForLocale() {
+		$all_locale_forums = get_option( self::OPTION_NAME );
+
+		if ( array_key_exists( $this->locale, $all_locale_forums ) ) {
+			return $all_locale_forums[ $this->locale ]['forum_id'];
+		}
+		return false;
+	}
+
+	/**
 	 * Create a topic bbPress topic the first time a translation is rejected
 	 * @return int $topic_id id of the created topic
 	 */
 	public function create_topic() {
-		$forum_id = 0;
+		$forum_id = $this->getForumIdForLocale();
 
-		$reject_data = get_option( self::OPTION_NAME );
-
-		if ( ! empty( $reject_data ) && array_key_exists( $this->locale, $reject_data ) ) {
-			$forum_id = $reject_data[ $this->locale ]['forum_id'];
-		} else {
+		if ( ! $this->getForumIdForLocale() ) {
 			$forum_id = $this->create_forum();
 		}
 
