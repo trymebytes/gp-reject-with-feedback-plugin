@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/class-gp-reject-with-feedback-in-forum-topic.php';
+require_once __DIR__ . '/class-custom-gp-route-translation.php';
 
 class GP_Reject_With_Feedback {
 
