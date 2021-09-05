@@ -53,6 +53,7 @@ class GP_Reject_With_Feedback {
 		$original_id        = $_POST['data']['original_id'];
 		$translation_id     = $_POST['data']['translation_id'];
 		$project_path       = $_POST['data']['project_path'];
+		$translation_set_slug = sanitize_text_field($_POST['data']['translation_set_slug']);
 		$rejection_feedback = sanitize_text_field( $_POST['data']['rejection_feedback'] );
 
 		if ( ! empty( $rejection_feedback ) ) {
@@ -60,8 +61,7 @@ class GP_Reject_With_Feedback {
 			$this->process_reject_with_feedback( $original_id, $locale_slug, $rejection_feedback );
 		}
 
-		$translation_status_update_result = $this->update_translation_status( $data, 'rejected' );
-		echo $translation_status_update_result;
+		$this->update_translation_status( $project_path, $locale_slug, $translation_set_slug, $translation_id, $_gp_route_nonce, 'rejected' );
 		die();
 	}
 
@@ -115,17 +115,15 @@ class GP_Reject_With_Feedback {
 
 	/**
 	 * Update translation status
-	 * @param array $data translation data
+	 * @param string $project_path 
+	 * @param string $locale_slug 
+	 * @param string $translation_set_slug 
+	 * @param string $translation_id 
+	 * @param string $_gp_route_nonce 
 	 * @param string $status  status to set for the translation
 	 */
-	private function update_translation_status( $data, $status ) {
-		$translation = GP::$translation->get( $data['translation_id'] );
-		$result      = $translation->set_status( $status );
-		if ( $result ) {
-			$gp_route = new GP_Route();
-			return $gp_route->tmpl( 'translation-row', get_defined_vars() );
-		} else {
-			return $this->die_with_error( 'Error in retrieving translation!' );
-		}
+	private function update_translation_status( $project_path, $locale_slug, $translation_set_slug, $translation_id, $_gp_route_nonce, $status ) {
+		$custom_gp_route = new Custom_GP_Route_Translation( $translation_id, $status, $_gp_route_nonce );
+		$custom_gp_route->set_status( $project_path, $locale_slug, $translation_set_slug );
 	}
 }
