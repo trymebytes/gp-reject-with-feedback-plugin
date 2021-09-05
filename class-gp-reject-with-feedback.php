@@ -61,7 +61,7 @@ class GP_Reject_With_Feedback {
 			$this->process_reject_with_feedback( $original_id, $locale_slug, $rejection_feedback );
 		}
 
-		$this->update_translation_status( $project_path, $locale_slug, $translation_set_slug, $translation_id, $_gp_route_nonce, 'rejected' );
+		$this->update_translation_status( $project_path, $locale_slug, $translation_set_slug, $translation_id, 'rejected' );
 		die();
 	}
 
@@ -119,11 +119,10 @@ class GP_Reject_With_Feedback {
 	 * @param string $locale_slug 
 	 * @param string $translation_set_slug 
 	 * @param string $translation_id 
-	 * @param string $_gp_route_nonce 
 	 * @param string $status  status to set for the translation
 	 */
-	private function update_translation_status( $project_path, $locale_slug, $translation_set_slug, $translation_id, $_gp_route_nonce, $status ) {
-		$custom_gp_route = new Custom_GP_Route_Translation( $translation_id, $status, $_gp_route_nonce );
+	private function update_translation_status( $project_path, $locale_slug, $translation_set_slug, $translation_id, $status ) {
+		$custom_gp_route = new Custom_GP_Route_Translation( $translation_id, $status );
 		$custom_gp_route->set_status( $project_path, $locale_slug, $translation_set_slug );
 	}
 }

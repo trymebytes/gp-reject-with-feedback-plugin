@@ -17,16 +17,9 @@ class Custom_GP_Route_Translation extends GP_Route_Translation {
 	 */
 	private $status;
 
-	/**
-	 * WordPress nonce
-	 * @var string
-	 */
-	private $_gp_route_nonce;
-
-	public function __construct( $translation_id, $status, $_gp_route_nonce ) {
+	public function __construct( $translation_id, $status ) {
 		$this->translation_id  = $translation_id;
 		$this->status          = $status;
-		$this->_gp_route_nonce = $_gp_route_nonce;
 	}
 
 	/**
@@ -42,12 +35,6 @@ class Custom_GP_Route_Translation extends GP_Route_Translation {
 	public function set_status( $project_path, $locale_slug, $translation_set_slug ) {
 		$status         = $this->status;
 		$translation_id = $this->translation_id;
-
-		$action = 'update-translation-status-' . $status . '_' . $translation_id;
-		if ( ! wp_verify_nonce( $this->_gp_route_nonce, $action ) ) {
-
-			return $this->die_with_error( __( 'An error has occurred. Please try again.', 'glotpress' ), 403 );
-		}
 
 		return $this->edit_single_translation( $project_path, $locale_slug, $translation_set_slug, array( $this, 'set_status_edit_function' ) );
 	}
