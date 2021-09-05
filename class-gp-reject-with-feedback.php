@@ -49,7 +49,7 @@ class GP_Reject_With_Feedback {
 			return;
 		}
 
-		$locale_slug        = sanitize_text_field( $_POST['data']['locale'] );
+		$locale_slug        = sanitize_text_field( $_POST['data']['locale_slug'] );
 		$original_id        = $_POST['data']['original_id'];
 		$translation_id     = $_POST['data']['translation_id'];
 		$project_path       = $_POST['data']['project_path'];
