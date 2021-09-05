@@ -6,8 +6,6 @@ class GP_Reject_With_Feedback_In_Forum_Topic {
 
 	const OPTION_NAME = 'custom_gp_rejection_forum_data';
 
-	private $translation_id;
-
 	private $locale;
 
 	private $rejection_feedback;
@@ -16,7 +14,6 @@ class GP_Reject_With_Feedback_In_Forum_Topic {
 
 	public function __construct( $data ) {
 		$this->locale             = $data['locale'];
-		$this->translation_id     = $data['translation_id'];
 		$this->rejection_feedback = $data['rejection_feedback'];
 		$this->original_id        = $data['original_id'];
 	}
