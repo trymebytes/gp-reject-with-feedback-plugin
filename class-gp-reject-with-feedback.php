@@ -73,7 +73,7 @@ class GP_Reject_With_Feedback {
 
 	/**
 	 * Check if translation alreadhy has a topic in the forum
-	 * @param int $translation_id
+	 * @param int $original_id
 	 * @return bool
 	 */
 	private function get_translation_meta_data( $original_id ) {
