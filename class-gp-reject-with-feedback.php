@@ -48,15 +48,15 @@ class GP_Reject_With_Feedback {
 		if ( ! check_ajax_referer( 'gp_reject_with_feedback_js_nonce', 'nonce' ) ) {
 			return;
 		}
-		$data                       = [];
-		$data['locale']             = $_POST['data']['locale'];
-		$data['translation_id']     = $_POST['data']['translation_id'];
-		$data['original_id']        = $_POST['data']['original_id'];
-		$data['rejection_feedback'] = sanitize_text_field( $_POST['data']['rejection_feedback'] );
+
+		$locale_slug        = sanitize_text_field( $_POST['data']['locale'] );
+		$original_id        = $_POST['data']['original_id'];
+		$translation_id     = $_POST['data']['translation_id'];
+		$rejection_feedback = sanitize_text_field( $_POST['data']['rejection_feedback'] );
 
 		if ( ! empty( $data['rejection_feedback'] ) ) {
 			//reject translation with feedback
-			$this->process_reject_with_feedback( $data );
+			$this->process_reject_with_feedback( $original_id, $locale_slug, $rejection_feedback );
 		}
 
 		$translation_status_update_result = $this->update_translation_status( $data, 'rejected' );
@@ -92,10 +92,8 @@ class GP_Reject_With_Feedback {
 	 * @param array $data translation data
 	 * @return int id of the topic or id of the reply
 	 */
-	private function process_reject_with_feedback( $data ) {
-		$gp_reject_instance = new GP_Reject_With_Feedback_In_Forum_Topic( $data );
-
-		$original_id = $data['original_id'];
+	private function process_reject_with_feedback( $original_id, $locale_slug, $rejection_feedback ) {
+		$gp_reject_instance = new GP_Reject_With_Feedback_In_Forum_Topic( $locale_slug, $rejection_feedback, $original_id );
 
 		$translation_meta_data = $this->get_translation_meta_data( $original_id );
 
