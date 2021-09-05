@@ -6,14 +6,14 @@
 class Custom_GP_Route_Translation extends GP_Route_Translation {
 
 	/**
-	 * ID of the transation
+	 * ID of the translation
 	 * @var int
 	 */
 	private $translation_id;
 
 	/**
-	 * ID of the transation
-	 * @var int
+	 * Status of the translation e.g 'rejected'
+	 * @var string
 	 */
 	private $status;
 
