@@ -116,7 +116,7 @@ class GP_Reject_With_Feedback_In_Forum_Topic {
 	 * @param int $topic_id ID of existing bbPress topic for this translation
 	 * @return int $reply_id ID of the reply to the topic
 	 */
-	public function add_reply( $topic_id ) {
+	public function add_reply( $topic_id, $forum_id) {
 		$reply_data = [
 			'post_author'  => bbp_get_current_user_id(),
 			'post_parent'  => $topic_id,
