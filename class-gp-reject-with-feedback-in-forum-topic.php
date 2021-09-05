@@ -6,16 +6,28 @@ class GP_Reject_With_Feedback_In_Forum_Topic {
 
 	const OPTION_NAME = 'custom_gp_rejection_forum_data';
 
-	private $locale;
+	/**
+	 * Slug for translation locale
+	 * @var string
+	 */
+	private $locale_slug;
 
+	/**
+	 * Feedback entered when translation was rejected
+	 * @var string
+	 */
 	private $rejection_feedback;
 
+	/**
+	 * ID of the original
+	 * @var int
+	 */
 	private $original_id;
 
-	public function __construct( $data ) {
-		$this->locale             = $data['locale'];
-		$this->rejection_feedback = $data['rejection_feedback'];
-		$this->original_id        = $data['original_id'];
+	public function __construct( $locale_slug, $rejection_feedback, $original_id ) {
+		$this->locale_slug        = $locale_slug;
+		$this->rejection_feedback = $rejection_feedback;
+		$this->original_id        = $original_id;
 	}
 
 	/**
@@ -29,7 +41,7 @@ class GP_Reject_With_Feedback_In_Forum_Topic {
 			'post_author'    => bbp_get_current_user_id(),
 			'post_password'  => '',
 			'post_content'   => '',
-			'post_title'     => $this->locale . ' - translations',
+			'post_title'     => $this->locale_slug . ' - translations',
 			'menu_order'     => 0,
 			'comment_status' => 'closed',
 		];
@@ -41,8 +53,8 @@ class GP_Reject_With_Feedback_In_Forum_Topic {
 			'forum_id' => $forum_id,
 		];
 
-		$reject_data                  = [];
-		$reject_data[ $this->locale ] = $locale_reject_forum_data;
+		$reject_data                       = [];
+		$reject_data[ $this->locale_slug ] = $locale_reject_forum_data;
 
 		//store the forum_id for this locale WordPress option
 		update_option( self::OPTION_NAME, $reject_data );
@@ -57,8 +69,8 @@ class GP_Reject_With_Feedback_In_Forum_Topic {
 	public function getForumIdForLocale() {
 		$all_locale_forums = get_option( self::OPTION_NAME );
 
-		if ( array_key_exists( $this->locale, $all_locale_forums ) ) {
-			return $all_locale_forums[ $this->locale ]['forum_id'];
+		if ( array_key_exists( $this->locale_slug, $all_locale_forums ) ) {
+			return $all_locale_forums[ $this->locale_slug ]['forum_id'];
 		}
 		return false;
 	}
