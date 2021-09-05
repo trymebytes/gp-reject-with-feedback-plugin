@@ -52,9 +52,10 @@ class GP_Reject_With_Feedback {
 		$locale_slug        = sanitize_text_field( $_POST['data']['locale'] );
 		$original_id        = $_POST['data']['original_id'];
 		$translation_id     = $_POST['data']['translation_id'];
+		$project_path       = $_POST['data']['project_path'];
 		$rejection_feedback = sanitize_text_field( $_POST['data']['rejection_feedback'] );
 
-		if ( ! empty( $data['rejection_feedback'] ) ) {
+		if ( ! empty( $rejection_feedback ) ) {
 			//reject translation with feedback
 			$this->process_reject_with_feedback( $original_id, $locale_slug, $rejection_feedback );
 		}
@@ -89,7 +90,9 @@ class GP_Reject_With_Feedback {
 	/**
 	 * Create a forum topic if a topic for this translation does not exist otherwise,
 	 * reply an existing topic for the translation in the forum
-	 * @param array $data translation data
+	 * @param int $original_id - ID of the original
+	 * @param string $locale_slug - slug of translation locale e.g sw for Swahili
+	 * @param string $rejection_feedback - rejection feedback
 	 * @return int id of the topic or id of the reply
 	 */
 	private function process_reject_with_feedback( $original_id, $locale_slug, $rejection_feedback ) {
